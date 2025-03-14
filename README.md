@@ -1,2 +1,5 @@
-# chess-game-with-bot
-Chess game on pygame and a bot based on neural network
+# Chess Game with Bot
+
+Реализация игры в шахматы на языке Python с использованием библиотеки pygame, а также реализация бота для игры как обученную нейросеть.
+
+__Статус:__ в разработке
