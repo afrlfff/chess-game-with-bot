@@ -1,4 +1,11 @@
 # renderer.py
+"""
+    Defines base methods od screen drawing
+"""
+
+
+import pygame
+from typing import Tuple
 
 from assets import Assets
 
@@ -15,4 +22,7 @@ class Renderer:
         pass
 
     def draw_chess_piece(self, piece):
+        pass
+
+    def draw_image(self, img, size: Tuple[int, int]):
         pass
