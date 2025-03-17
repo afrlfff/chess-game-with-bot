@@ -1,9 +1,5 @@
-from scenes.base_scene import BaseScene
-from main_menu_scene import MainMenuScene
-from game_scene import GameScene
+from .scene_manager import SceneManager
 
 __all__ = [
-    "BaseScene",
-    "MainMenuScene",
-    "GameScene"
+    "SceneManager"
 ]

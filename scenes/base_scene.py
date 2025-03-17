@@ -3,13 +3,14 @@
 from abc import ABC, abstractmethod
 
 class BaseScene(ABC):
-    def __init__(self):
-        pass
+    @abstractmethod
+    def handle_events(self, events):
+        raise ValueError("Scene classes should define hanlde_events method")
 
     @abstractmethod
     def update(self):
-        pass
+        raise ValueError("Scene classes should define update method")
 
     @abstractmethod
     def render(self):
-        pass
+        raise ValueError("Scene classes should define render method")

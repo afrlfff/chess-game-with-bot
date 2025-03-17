@@ -3,26 +3,71 @@
     Defines base methods od screen drawing
 """
 
-
 import pygame
-from typing import Tuple
+from typing import Optional, Union, Tuple
 
-from assets import Assets
 
 class Renderer:
-    def __init__(self, game):
-        self.game = game
-        self.assets = Assets()
+    def __init__(self, surface: pygame.Surface):
+        self.surface = surface
     
-    def render(self):
-        self.draw_chess_board()
-        self.draw_chess_piece()
+    @staticmethod
+    def create_surface(size: Tuple[int, int]):
+        return pygame.Surface(size)
+    
+    @staticmethod
+    def create_font(size, path) -> pygame.font.Font:
+        return pygame.font.Font(path, size)
 
-    def draw_chess_board(self):
-        pass
+    @staticmethod
+    def create_text_surface(text, color, font, antialiasing=True) -> pygame.Surface:
+        return font.render(text, antialiasing, color)
 
-    def draw_chess_piece(self, piece):
-        pass
+    def blit(self,
+        source: pygame.Surface,
+        dest: Union[Tuple[int, int], pygame.rect.RectType],
+        area: Optional[pygame.rect.RectType] = None
+    ):
+        self.surface.blit(source, dest, area)
 
-    def draw_image(self, img, size: Tuple[int, int]):
-        pass
+    def fill(self, color: Union[Tuple[int, int, int], Tuple[int, int, int, int]]):
+        """
+            Fills the screen by a given color.
+            :param color: tuple (R, G, B) / (R, G, B, A).
+        """
+        self.surface.fill(color)
+    
+    def draw_rect(self, color, rect, width=0):
+        """
+            Draws a rectangle.
+            :param color: tuple (R, G, B)
+            :param rect: tuple (x, y, width, height)
+            :param width: int.
+        """
+        pygame.draw.rect(self.surface, color, rect, width)
+    
+    def draw_circle(self, color, center, radius, width=0):
+        """
+            Draws a circle.
+            :param color: tuple (R, G, B).
+            :param center: tuple (x, y).
+            :param radius: int.
+            :param width: int.
+        """
+        pygame.draw.circle(self.surface, color, center, radius, width)
+
+    def draw_text(self, text_surface, pos):
+        """
+        Draws text surface on the screen.
+        :param text_surface: str
+        :param pos: tuple (x, y)
+        """
+        self.surface.blit(text_surface, pos)
+    
+    def draw_image(self, image, pos):
+        """
+            Draws an image on a given position
+        """
+        self.surface.blit(image, pos)
+    
+
