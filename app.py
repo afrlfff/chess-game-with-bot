@@ -2,7 +2,7 @@
 
 from constants import SCREEN_SIZE
 from scenes import SceneManager
-from graphics import GameInitializer, GameClock, WindowManager, Event
+from graphics import GameInitializer, GameClock, WindowManager, EventManager, InputManager
 from assets import Assets
 
 
@@ -22,12 +22,14 @@ class App:
     def run(self):
         running = True
         while running:
-            events = Event.get_events()
+            events = EventManager.get_events()
             for event in events:
-                if event.type == Event.QUIT:
+                if event.type == EventManager.QUIT:
                     running = False
  
-            self.current_scene.handle_events(events)
+            InputManager.update_frame()
+            EventManager.update_frame()
+            self.current_scene.handle_events()
             self.current_scene.update()
             self.current_scene.render()
 

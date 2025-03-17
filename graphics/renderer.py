@@ -12,12 +12,11 @@ class Renderer:
         self.surface = surface
     
     @staticmethod
-    def create_surface(size: Tuple[int, int]):
-        return pygame.Surface(size)
-    
-    @staticmethod
-    def create_font(size, path) -> pygame.font.Font:
-        return pygame.font.Font(path, size)
+    def create_surface(size: Tuple[int, int], alpha=False):
+        if alpha:
+            return pygame.Surface(size, pygame.SRCALPHA)
+        else:
+            return pygame.Surface(size)
 
     @staticmethod
     def create_text_surface(text, color, font, antialiasing=True) -> pygame.Surface:
@@ -55,14 +54,6 @@ class Renderer:
             :param width: int.
         """
         pygame.draw.circle(self.surface, color, center, radius, width)
-
-    def draw_text(self, text_surface, pos):
-        """
-        Draws text surface on the screen.
-        :param text_surface: str
-        :param pos: tuple (x, y)
-        """
-        self.surface.blit(text_surface, pos)
     
     def draw_image(self, image, pos):
         """

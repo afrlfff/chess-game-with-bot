@@ -1,59 +1,55 @@
 # main_menu_scene.py
 
 from .base_scene import BaseScene
-from graphics import Event, Renderer
-from ui import Button
-from constants import SCREEN_SIZE, BTN_FONT_PATH
+from graphics import EventManager, Renderer, FontManager
+from ui import LabelButton
+from constants import SCREEN_SIZE, RUSSO_ONE_REGULAR
 
 
 class MainMenuScene(BaseScene):
     def __init__(self, app):
         self.app = app
         self.updated = True
-        self.background_color = (255, 0, 0)
-        self.renderers = {}
+        self.background_color = (0, 0, 0)
+        self.renderer = Renderer(self.app.window.screen)
         self.buttons = []
         self.fonts = {}
 
         self.initialize_scene()
 
     def initialize_scene(self):
-        self.renderers = {
-            "main": Renderer(self.app.window.screen),
-            "title": Renderer(Renderer.create_surface(self.app.window.get_size())),
-            "buttons": Renderer(Renderer.create_surface(self.app.window.get_size()))
-        }
         self.fonts = {
-            "button": Renderer.create_font(size=50, path=BTN_FONT_PATH)
+            "title": FontManager.get_font(font_fileanme=RUSSO_ONE_REGULAR, font_size=50),
+            "button": FontManager.get_font(font_fileanme=RUSSO_ONE_REGULAR, font_size=40)
         }
         self.buttons = [
-            Button(
-                renderer= self.renderers["buttons"], 
-                pos= (SCREEN_SIZE[0] // 2 - 100, SCREEN_SIZE[1] // 2 - 50),
-                size= (100, 50),
-                color= (0, 0, 255),
+            LabelButton(
+                pos= (SCREEN_SIZE[0] // 2 - 125, SCREEN_SIZE[1] // 2 - 37),
+                size= (250, 75),
+                color= (255, 255, 255),
                 font= self.fonts["button"],
                 text= "Играть",
-                text_color= (255, 255, 255)
+                text_color= (0, 0, 0)
             )
         ]
 
-    def handle_events(self, events):
-        for event in events:
-            if event.type == Event.MOUSEBUTTONDOWN:
-                pass
-            if event.type == Event.MOUSEBUTTONUP:
-                pass
+    def handle_events(self):
+        for event in EventManager.get_events():
+            for button in self.buttons:
+                button.handle_event(event)
 
     def update(self):
         self.updated = True
+
+        for button in self.buttons:
+            button.update()
     
     def render(self):
         if not self.updated:
             pass
         
-        self.renderers['main'].fill(self.background_color)
+        self.renderer.fill(self.background_color)
         for button in self.buttons:
-            button.render()
+            button.render(self.renderer)
 
         self.updated = False
