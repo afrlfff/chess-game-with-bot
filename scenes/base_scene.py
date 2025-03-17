@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 
 class BaseScene(ABC):
     @abstractmethod
-    def handle_events(self, events):
+    def handle_events(self):
         raise ValueError("Scene classes should define hanlde_events method")
 
     @abstractmethod
