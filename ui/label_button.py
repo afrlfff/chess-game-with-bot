@@ -1,16 +1,23 @@
-# button.py
+# label_button.py
 
 from graphics import Renderer, Event, EventManager, InputManager
 from .ui_object import UIObject
 
-class Button(UIObject):
-    def __init__(self, pos, size, color):        
+class LabelButton(UIObject):
+    def __init__(self, pos, size, color, font, text="", text_color=(0, 0, 0)):        
         super().__init__(pos, size)
         self.color = color
+        self.text_surface = Renderer.create_text_surface(text, text_color, font, False)
+        self.text_pos = (
+            self.pos[0] + (self.size[0] - self.text_surface.get_width()) // 2, 
+            self.pos[1] + (self.size[1] - self.text_surface.get_height()) // 2
+        )
         
         self.main_pos = pos
         self.main_size = size
         self.main_color = color
+        self.main_text_pos = self.text_pos
+        #self.main_text_size = self.main
 
         self.color_on_hover = (
             int(color[0] * 0.8), 
@@ -33,6 +40,7 @@ class Button(UIObject):
     def on_click(self):
         self.size = self.size_on_click
         self.pos = self.pos_on_click
+        #self.text_size = 
 
     def handle_event(self, event: Event):
         if event.type == EventManager.MOUSEBUTTONDOWN:
@@ -49,4 +57,5 @@ class Button(UIObject):
             self.color = self.main_color
 
     def render(self, source_renderer: Renderer):
-        source_renderer.draw_rect(self.color, (*self.pos, *self.size))
+        source_renderer.draw_rect(self.color, (*self.pos, *self.size))        
+        source_renderer.blit(self.text_surface, self.text_pos)
