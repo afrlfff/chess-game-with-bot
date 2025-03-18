@@ -5,25 +5,15 @@
 
 import pygame
 from typing import Optional, Union, Tuple
+from .surface_manager import Surface
 
 
 class Renderer:
-    def __init__(self, surface: pygame.Surface):
+    def __init__(self, surface: Surface):
         self.surface = surface
-    
-    @staticmethod
-    def create_surface(size: Tuple[int, int], alpha=False):
-        if alpha:
-            return pygame.Surface(size, pygame.SRCALPHA)
-        else:
-            return pygame.Surface(size)
-
-    @staticmethod
-    def create_text_surface(text, color, font, antialiasing=True) -> pygame.Surface:
-        return font.render(text, antialiasing, color)
 
     def blit(self,
-        source: pygame.Surface,
+        source: Surface,
         dest: Union[Tuple[int, int], pygame.rect.RectType],
         area: Optional[pygame.rect.RectType] = None
     ):

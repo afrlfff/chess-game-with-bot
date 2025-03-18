@@ -19,8 +19,8 @@ class MainMenuScene(BaseScene):
 
     def initialize_scene(self):
         self.fonts = {
-            "title": FontManager.get_font(font_fileanme=RUSSO_ONE_REGULAR, font_size=50),
-            "button": FontManager.get_font(font_fileanme=RUSSO_ONE_REGULAR, font_size=40)
+            "title": FontManager.get_font(font_filename=RUSSO_ONE_REGULAR, font_size=50),
+            "button": FontManager.get_font(font_filename=RUSSO_ONE_REGULAR, font_size=40)
         }
         self.buttons = [
             LabelButton(
