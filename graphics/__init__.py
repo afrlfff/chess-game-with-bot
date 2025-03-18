@@ -5,7 +5,6 @@ from .game_initializer import GameInitializer
 from .window_manager import WindowManager
 from .image_manager import ImageManager
 from .input_manager import InputManager
-from .font_manager import FontManager
 from .surface_manager import Surface, SurfaceManager
 
 
@@ -18,7 +17,6 @@ __all__ = [
     "WindowManager",
     "ImageManager",
     "InputManager",
-    "FontManager",
     "Surface",
-    "SurfaceManager"
+    "SurfaceManager",
 ]
