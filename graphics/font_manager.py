@@ -22,4 +22,4 @@ class FontManager:
     
     @classmethod
     def _create_key(cls, font_filename, font_size):
-        return frozenset(font_filename, font_size)
+        return frozenset((font_filename, font_size))

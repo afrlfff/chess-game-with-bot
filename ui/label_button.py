@@ -1,13 +1,13 @@
 # label_button.py
 
-from graphics import Renderer, Event, EventManager, InputManager
+from graphics import Renderer, Event, EventManager, InputManager, SurfaceManager
 from .ui_object import UIObject
 
 class LabelButton(UIObject):
     def __init__(self, pos, size, color, font, text="", text_color=(0, 0, 0)):        
         super().__init__(pos, size)
         self.color = color
-        self.text_surface = Renderer.create_text_surface(text, text_color, font, False)
+        self.text_surface = SurfaceManager.create_text_surface(text, text_color, font, False)
         self.text_pos = (
             self.pos[0] + (self.size[0] - self.text_surface.get_width()) // 2, 
             self.pos[1] + (self.size[1] - self.text_surface.get_height()) // 2
