@@ -1,9 +1,12 @@
 # input_manager.py
 """
-    Contains class InputManager, made to receive data from input devices.
-    
-    Uses caching for already calculated data in the current frame, 
-    so call ImageManager.update_frame() on every frame  
+    This module provides the `InputManager` class, which is designed to manage 
+    and retrieve user input data in a game application.
+
+    It supports efficient access to input data by caching it on a per-frame basis 
+    and updating only when necessary.
+
+    Use 'update_frame()' on every game frame.
 """
 
 import pygame

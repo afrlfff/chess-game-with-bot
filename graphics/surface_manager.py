@@ -1,50 +1,35 @@
 # surface_manager.py
 """
-    Contains Surface and SurfaceManager classes.
-    
-    Surface class defines surface object with base surface methods
-    
-    SurfaceManager class defines methods of creating a surfaces.
+    This module provides the `SurfaceManager` class, which offers utility methods 
+    for creating and managing Pygame surfaces in various ways.
 """
 
-
 import pygame
+import numpy as np
+from pygame import surfarray
 from typing import Tuple
 from .font import FontBase
-
-
-class Surface:
-    def __init__(self, size, flags=0, depth=0, masks=None):
-        self.surface = pygame.Surface(size, flags, depth, masks)
-
-    def get_size(self):
-        """ Returns surface size in pixels """
-        return self.surface.get_size()
-
-    def get_rect(self):
-        """ Returns surface rectangle """
-        return self.surface.get_rect()
-    
-    def copy(self):
-        """ Returns the copy of teh surface """
-        return self.surface.copy()
-    
-    def get_width(self):
-        """ Returns width of the surface in pixels """
-        return self.surface.get_width()
-    
-    def get_height(self):
-        """ Returns height of the surface in pixels """
-        return self.surface.get_height()
+from .surface import Surface
 
 class SurfaceManager:
     @staticmethod
-    def create_surface(size: Tuple[int, int], alpha=False) -> Surface:
-        if alpha:
-            return Surface(size, pygame.SRCALPHA)
+    def create_surface(size: Tuple[int, int], is_alpha: bool = False) -> Surface:
+        if is_alpha:
+            return Surface(pygame.Surface(size=size, flags=pygame.SRCALPHA))
         else:
-            return Surface(size)
+            return Surface(pygame.Surface(size=size))
+        
+    @staticmethod
+    def create_surface_from_pixels(pixels: np.ndarray) -> Surface:
+        return Surface(surfarray.make_surface(pixels))
+
+    @staticmethod
+    def create_surface_from_image(filepath) -> Surface:
+        if filepath.suffix == '.jpg':
+            return Surface(pygame.image.load(filepath))
+        if filepath.suffix == '.png':
+            return Surface(pygame.image.load(filepath).convert_alpha())
 
     @staticmethod
     def create_text_surface(text: str, color, font: FontBase, antialias=True, background=None) -> Surface:
-        return font.render(text, antialias, color, background)
+        return font.to_surface(text, antialias, color, background)

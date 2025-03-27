@@ -1,21 +1,15 @@
-from .renderer import Renderer
-from .event_manager import Event, EventManager
+from .event_manager import EventManager
 from .game_clock import GameClock
-from .game_initializer import GameInitializer
 from .window_manager import WindowManager
-from .image_manager import ImageManager
 from .input_manager import InputManager
-from .surface_manager import Surface, SurfaceManager
+from .surface_manager import SurfaceManager
+from .surface import Surface
 
 
 __all__ = [
-    "Renderer",
-    "Event",
     "EventManager",
     "GameClock",
-    "GameInitializer",
     "WindowManager",
-    "ImageManager",
     "InputManager",
     "Surface",
     "SurfaceManager",

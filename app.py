@@ -1,23 +1,23 @@
 # app.py
 
-from constants import SCREEN_SIZE
+from constants import SCREEN_SIZE, FPS
 from scenes import SceneManager
-from graphics import GameInitializer, GameClock, WindowManager, EventManager, InputManager
+from graphics import WindowManager, GameClock, WindowManager, EventManager, InputManager
 from assets import Assets
 
 
 class App:
     def __init__(self):
-        GameInitializer.init()
-        self.window = WindowManager(SCREEN_SIZE, "Chess game with bot")
-        self.clock = GameClock()
-
+        WindowManager.init()
+        WindowManager.create_window(size=SCREEN_SIZE, title="Chess game")
+        self.clock = GameClock(FPS)
         Assets.load_assets()
-        self.scenes = SceneManager.load_scenes(self)
-        self.current_scene = self.scenes.get("menu") 
+        SceneManager.load_scenes()
 
-    def change_scene(self, scene_name):
-        self.current_scene = self.scenes.get_scene(scene_name)
+        self.current_scene = SceneManager.get_current_scene()
+
+    def stop(self):
+        WindowManager.quit()
 
     def run(self):
         running = True
@@ -29,11 +29,12 @@ class App:
  
             InputManager.update_frame()
             EventManager.update_frame()
+            self.current_scene = SceneManager.get_current_scene()
             self.current_scene.handle_events()
             self.current_scene.update()
             self.current_scene.render()
 
-            self.window.render()
+            WindowManager.render()
             self.clock.tick()
 
-        GameInitializer.quit()
+        WindowManager.quit()

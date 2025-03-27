@@ -1,6 +1,6 @@
 # button.py
 
-from graphics import Renderer, Event, EventManager, InputManager
+from graphics import EventManager, InputManager, Surface
 from .ui_object import UIObject
 
 class Button(UIObject):
@@ -34,19 +34,23 @@ class Button(UIObject):
         self.size = self.size_on_click
         self.pos = self.pos_on_click
 
-    def handle_event(self, event: Event):
+    def release(self):
+        self.size = self.main_size
+        self.pos = self.main_pos
+
+    def handle_event(self, event: EventManager.Event):
         if event.type == EventManager.MOUSEBUTTONDOWN:
             if self.is_hovered(InputManager.get_mouse_pos()):
                 self.on_click()
+        
         elif event.type == EventManager.MOUSEBUTTONUP:
-            self.size = self.main_size
-            self.pos = self.main_pos
+            self.release()
 
     def update(self):
         if self.is_hovered(InputManager.get_mouse_pos()):
-            self.color = self.color_on_hover
+            self.on_hover()
         else:
             self.color = self.main_color
 
-    def render(self, source_renderer: Renderer):
-        source_renderer.draw_rect(self.color, (*self.pos, *self.size))
+    def render(self, surface: Surface):
+        surface.draw_rect(self.color, (*self.pos, *self.size))

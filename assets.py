@@ -1,12 +1,12 @@
 # assets.py
 
-from graphics import ImageManager
+from graphics import SurfaceManager
 from constants import IMG_PATH
 
 
 class Assets:
-    chess_piece_images = {}
-    chess_board_images = {}
+    chess_piece_surfaces = {}
+    chess_board_surfaces = {}
 
     @classmethod
     def load_assets(cls):
@@ -19,7 +19,7 @@ class Assets:
             for filepath in (IMG_PATH / 'chess-pieces').iterdir():
                 if filepath.is_file():
                     filename = filepath.stem
-                    Assets.chess_piece_images[filename] = ImageManager.load(filepath)
+                    Assets.chess_piece_surfaces[filename] = SurfaceManager.create_surface_from_image(filepath)
         except FileNotFoundError as e:
             raise FileNotFoundError(f"Error while loading chess piece images: {e}")
     
@@ -29,7 +29,7 @@ class Assets:
             for filepath in (IMG_PATH / 'chess-boards').iterdir():
                 if filepath.is_file():
                     filename = filepath.stem
-                    Assets.chess_board_images[filename] = ImageManager.load(filepath)
+                    Assets.chess_board_surfaces[filename] = SurfaceManager.create_surface_from_image(filepath)
         except FileNotFoundError as e:
             raise FileNotFoundError(f"Error while loading chess board images: {e}")
 

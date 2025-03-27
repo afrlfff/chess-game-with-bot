@@ -1,23 +1,17 @@
 # event_manager.py
 """
-    Contains Event and EventManager classes.
-    
-    Event class defines event objects containinig event type
-    
-    EventManager class defines get_event() method to get all the available events.
-    Also uses caching so call EventManager.updae_frame() method on every frame.
+    This module contains the EventManager class, which provides a centralized 
+    way to handle and manage Pygame events in a game application.
+
+    Use 'update_frame()' on every game frame.
 """
 
 
 import pygame
 
-
-class Event:
-    def __init__(self, event: pygame.event.Event):
-        self.event = event
-        self.type = event.type
-
 class EventManager:
+    Event = pygame.event.Event # Just varaible type to use
+
     QUIT = pygame.QUIT
     KEYDOWN = pygame.KEYDOWN
     KEYUP = pygame.KEYUP
@@ -35,7 +29,7 @@ class EventManager:
     @classmethod
     def get_events(cls):
         if not cls._frame_updated:
-            cls._events = [Event(event) for event in pygame.event.get()]
+            cls._events = pygame.event.get()
             cls._frame_updated = True
         return cls._events 
     

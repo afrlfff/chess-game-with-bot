@@ -1,30 +1,24 @@
 # main_menu_scene.py
 
 from .base_scene import BaseScene
-from graphics import EventManager, Renderer, SurfaceManager
+from graphics import EventManager, SurfaceManager
 from graphics.font import RussoOneRegular
 from ui import LabelButton
 from constants import SCREEN_SIZE
 
 
 class MainMenuScene(BaseScene):
-    def __init__(self, app):
-        self.app = app
-        self.updated = True
+    def __init__(self):
         self.background_color = (0, 0, 0)
-        self.renderer = Renderer(self.app.window.screen)
-        self.buttons = []
-        self.title_surface = None
-        self.title_pos = (-1, -1)
+        self.updated = True
+        super().__init__()
 
-        self.initialize_scene()
-
-    def initialize_scene(self):
+    def initialize_objects(self):
         self.title_surface = SurfaceManager.create_text_surface(
-            "Chess game", 
-            (255, 255, 255), 
-            RussoOneRegular(75),
-            False
+            text="Chess game", 
+            color=(255, 255, 255), 
+            font=RussoOneRegular(75),
+            antialias=False
         )
         self.title_pos = (
             (SCREEN_SIZE[0] - self.title_surface.get_width()) // 2,
@@ -55,7 +49,7 @@ class MainMenuScene(BaseScene):
                 button.handle_event(event)
 
     def update(self):
-        self.updated = True
+        self.updated = True # think about how to optimize class using 'self.updated'
 
         for button in self.buttons:
             button.update()
@@ -64,9 +58,9 @@ class MainMenuScene(BaseScene):
         if not self.updated:
             pass
         
-        self.renderer.fill(self.background_color)
-        self.renderer.blit(self.title_surface, self.title_pos)
+        self.screen.fill(self.background_color)
+        self.screen.blit(self.title_surface, self.title_pos)
         for button in self.buttons:
-            button.render(self.renderer)
+            button.render(self.screen)
 
         self.updated = False

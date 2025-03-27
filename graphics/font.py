@@ -1,16 +1,17 @@
 # font_manager.py
 
 """
-    Contains FontManager class, made to create and store fonts in cache.
-    
-    Contains FontBase class, defining font base methdods
+    This module provides tools for managing and rendering fonts in a Pygame application. 
 
-    Contatins FontBase sublasses to represent different fonts 
+    It includes `FontBase`, an abstract class for font handling, and `FontManager` 
+    for caching and retrieving fonts efficiently. Subclasses like `RussoOneRegular` 
+    implement specific font behaviors.
 """
 
 import pygame
 from abc import ABC, abstractmethod
 from constants import FONTS_PATH, RUSSO_ONE_REGULAR
+from .surface import Surface
 
 
 class FontBase(ABC):
@@ -38,9 +39,9 @@ class FontBase(ABC):
         """ Returns size of the given text in pixels """
         return self.font.size(text)
     
-    def render(self, text: str, antialias: bool, color, background=None):
+    def to_surface(self, text: str, antialias: bool, color, background=None):
         """ Renders given text as a surface """
-        return self.font.render(text, antialias, color, background)
+        return Surface(self.font.render(text, antialias, color, background))
 
 
 class FontManager:

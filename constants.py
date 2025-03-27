@@ -11,3 +11,4 @@ SCREEN_SIZE = (600, 600)
 FPS = 60
 
 RUSSO_ONE_REGULAR = 'RussoOne-Regular.ttf'
+

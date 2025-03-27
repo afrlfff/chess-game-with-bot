@@ -4,11 +4,13 @@ from .base_scene import BaseScene
 
 
 class GameScene(BaseScene):
-    def __init__(self, app):
-        self.app = app
+    def __init__(self):
         self.updated = True
 
     def handle_events(self, events):
+        pass
+
+    def initialize_objects(self):
         pass
 
     def update(self):

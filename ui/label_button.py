@@ -1,6 +1,6 @@
 # label_button.py
 
-from graphics import Renderer, Event, EventManager, InputManager, SurfaceManager
+from graphics import EventManager, InputManager, SurfaceManager, Surface
 from graphics.font import FontBase
 from .ui_object import UIObject
 
@@ -45,28 +45,32 @@ class LabelButton(UIObject):
     def on_hover(self):
         self.color = self.color_on_hover
 
-    def on_click(self):
+    def click(self):
         self.size = self.size_on_click
         self.pos = self.pos_on_click
         self.text_surface = self.text_surface_on_click
         self.text_pos = self.text_pos_on_click
 
-    def handle_event(self, event: Event):
+    def release(self):
+        self.size = self.main_size
+        self.pos = self.main_pos
+        self.text_surface = self.main_text_surface
+        self.text_pos = self.main_text_pos
+
+    def handle_event(self, event: EventManager.Event):
         if event.type == EventManager.MOUSEBUTTONDOWN:
             if self.is_hovered(InputManager.get_mouse_pos()):
-                self.on_click()
+                self.click()
+
         elif event.type == EventManager.MOUSEBUTTONUP:
-            self.size = self.main_size
-            self.pos = self.main_pos
-            self.text_surface = self.main_text_surface
-            self.text_pos = self.main_text_pos
+            self.release()
 
     def update(self):
         if self.is_hovered(InputManager.get_mouse_pos()):
-            self.color = self.color_on_hover
+            self.on_hover()
         else:
             self.color = self.main_color
 
-    def render(self, source_renderer: Renderer):
-        source_renderer.draw_rect(self.color, (*self.pos, *self.size))        
-        source_renderer.blit(self.text_surface, self.text_pos)
+    def render(self, surface: Surface):
+        surface.draw_rect(self.color, (*self.pos, *self.size))        
+        surface.blit(self.text_surface, self.text_pos)
