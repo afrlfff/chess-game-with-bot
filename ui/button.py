@@ -4,8 +4,8 @@ from graphics import EventManager, InputManager, Surface
 from .ui_object import UIObject
 
 class Button(UIObject):
-    def __init__(self, pos, size, color):        
-        super().__init__(pos, size)
+    def __init__(self, pos, size, color, callback=None):        
+        super().__init__(pos, size, callback)
         self.color = color
         
         self.main_pos = pos
@@ -45,6 +45,8 @@ class Button(UIObject):
         
         elif event.type == EventManager.MOUSEBUTTONUP:
             self.release()
+            if self.is_hovered(InputManager.get_mouse_pos()):
+                self.callback()
 
     def update(self):
         if self.is_hovered(InputManager.get_mouse_pos()):

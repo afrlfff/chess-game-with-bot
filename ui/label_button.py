@@ -5,8 +5,9 @@ from graphics.font import FontBase
 from .ui_object import UIObject
 
 class LabelButton(UIObject):
-    def __init__(self, pos, size, color, font: FontBase, text="", text_color=(0, 0, 0)):        
-        super().__init__(pos, size)
+    def __init__(self, pos, size, color, font: FontBase, text="", text_color=(0, 0, 0),
+                 callback=None):        
+        super().__init__(pos, size, callback)
         self.color = color
         self.text_surface = SurfaceManager.create_text_surface(text, text_color, font, False)
         self.text_pos = (
@@ -64,6 +65,8 @@ class LabelButton(UIObject):
 
         elif event.type == EventManager.MOUSEBUTTONUP:
             self.release()
+            if self.is_hovered(InputManager.get_mouse_pos()):
+                self.callback()
 
     def update(self):
         if self.is_hovered(InputManager.get_mouse_pos()):

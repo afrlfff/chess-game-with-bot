@@ -11,12 +11,17 @@ class BaseScene(ABC):
         self.initialize_objects()
 
     @abstractmethod
-    def handle_events(self):
+    def initialize_objects(self):
+        raise ValueError("Scene classes should define initialize_objects method")
+
+    @staticmethod    
+    @abstractmethod
+    def get_name():
         raise ValueError("Scene classes should define hanlde_events method")
 
     @abstractmethod
-    def initialize_objects(self):
-        raise ValueError("Scene classes should define initialize_objects method")
+    def handle_events(self):
+        raise ValueError("Scene classes should define hanlde_events method")
 
     @abstractmethod
     def update(self):
